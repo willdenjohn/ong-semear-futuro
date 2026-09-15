@@ -2,6 +2,7 @@
  * Teste ponta a ponta da SPA no Chrome real, via Chrome DevTools Protocol.
  * Pré-requisito: servidor local em http://127.0.0.1:5500 (npm start).
  * Uso: node tests/e2e.mjs
+ * Para testar o build: BASE_URL=http://127.0.0.1:5500/dist/html/app.html node tests/e2e.mjs
  */
 import { spawn } from 'node:child_process';
 import { mkdtempSync } from 'node:fs';
@@ -9,18 +10,23 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 const CHROME = process.env.CHROME_PATH || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
-const BASE = 'http://127.0.0.1:5500/html/app.html';
+const BASE = process.env.BASE_URL || 'http://127.0.0.1:5500/html/app.html';
 const PORTA = 9333;
 const esperar = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const perfil = mkdtempSync(join(tmpdir(), 'semear-e2e-'));
+// No runner Ubuntu do GitHub Actions o sandbox do Chrome é bloqueado pelo AppArmor
+const flagsCI = process.env.CI ? ['--no-sandbox', '--disable-dev-shm-usage'] : [];
 const chrome = spawn(CHROME, [
-  '--headless=new', '--disable-gpu', '--no-first-run',
+  '--headless=new', '--disable-gpu', '--no-first-run', ...flagsCI,
   `--remote-debugging-port=${PORTA}`, `--user-data-dir=${perfil}`, 'about:blank',
 ]);
+chrome.on('exit', (codigo) => {
+  if (codigo) console.error(`Chrome encerrou com código ${codigo}`);
+});
 
 async function conectar() {
-  for (let i = 0; i < 30; i += 1) {
+  for (let i = 0; i < 100; i += 1) {
     try {
       const alvos = await (await fetch(`http://127.0.0.1:${PORTA}/json`)).json();
       const pagina = alvos.find((a) => a.type === 'page');
