@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ONG Semear Futuro: educação, alimentação e inclusão digital para comunidades da zona leste de São Paulo.">
+  <title>ONG Semear Futuro | Educação e inclusão social</title>
+  <link rel="stylesheet" href="../css/estilo.css">
+</head>
+<body>
+  <a class="pular-link" href="#conteudo">Pular para o conteúdo principal</a>
+
+  <header class="cabecalho">
+    <div class="marca-grupo">
+      <img src="../imagens/logo-semear-futuro.png" alt="Logotipo da ONG Semear Futuro: uma muda de planta dentro de um círculo verde" width="56" height="56">
+      <h1>ONG Semear Futuro</h1>
+    </div>
+
+    <button type="button" class="botao-menu" aria-expanded="false" aria-controls="menu-principal">
+      <span class="icone-menu" aria-hidden="true"></span>
+      Menu
+    </button>
+
+    <p class="slogan">Educação, alimentação e inclusão digital na zona leste de São Paulo</p>
+
+    <nav class="navegacao" id="menu-principal" aria-label="Navegação principal">
+      <ul class="menu">
+        <li><a href="index.html" aria-current="page">Início</a></li>
+        <li class="menu-item-sub">
+          <a href="projetos.html">Projetos sociais</a>
+          <button type="button" class="botao-submenu" aria-expanded="false" aria-controls="submenu-projetos">
+            <span class="sr-only">Abrir submenu de projetos</span>
+          </button>
+          <ul class="submenu" id="submenu-projetos">
+            <li><a href="projetos.html#reforco-escolar">Reforço escolar</a></li>
+            <li><a href="projetos.html#cozinha-solidaria">Cozinha Solidária</a></li>
+            <li><a href="projetos.html#inclusao-digital">Inclusão Digital</a></li>
+          </ul>
+        </li>
+        <li><a href="cadastro.html">Cadastre-se</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="conteudo" class="layout-inicio">
+    <section id="quem-somos">
+      <h2>Quem somos</h2>
+      <p>
+        A Semear Futuro é uma organização da sociedade civil sem fins lucrativos fundada em 2014,
+        no bairro do Itaim Paulista, em São Paulo. Atuamos com crianças, adolescentes e famílias em
+        situação de vulnerabilidade social, oferecendo reforço escolar, oficinas de tecnologia e
+        distribuição de cestas básicas.
+      </p>
+      <p>
+        Somos mantidos por doações de pessoas físicas, parcerias com empresas locais e pelo trabalho
+        de mais de 80 voluntários ativos.
+      </p>
+      <figure>
+        <img src="../imagens/oficina-informatica.jpg"
+             alt="Adolescentes sentados em computadores durante oficina de informática na sede da ONG"
+             width="640" height="360">
+        <figcaption>Oficina de inclusão digital realizada na sede da ONG, em 2025.</figcaption>
+      </figure>
+    </section>
+
+    <section id="missao-valores">
+      <h2>Missão e valores</h2>
+      <p>
+        Nossa missão é ampliar oportunidades por meio da educação, garantindo que nenhuma criança
+        do território fique fora da escola ou sem alimentação adequada.
+      </p>
+      <ul>
+        <li><strong>Dignidade:</strong> atendimento sem burocracia e sem constrangimento.</li>
+        <li><strong>Transparência:</strong> prestação de contas pública a cada trimestre.</li>
+        <li><strong>Território:</strong> as decisões são tomadas junto com a comunidade atendida.</li>
+        <li><strong>Continuidade:</strong> projetos de longo prazo, não ações pontuais.</li>
+      </ul>
+    </section>
+
+    <section id="como-ajudar">
+      <h2>Como ajudar</h2>
+      <p>Existem três formas diretas de apoiar o nosso trabalho:</p>
+      <ol>
+        <li>Doação mensal recorrente, a partir de R$ 20,00.</li>
+        <li>Doação de alimentos, roupas e equipamentos de informática.</li>
+        <li>Trabalho voluntário em reforço escolar, oficinas ou administração.</li>
+      </ol>
+      <p><a class="botao" href="cadastro.html">Quero me cadastrar</a></p>
+    </section>
+
+    <aside id="numeros" aria-labelledby="titulo-numeros">
+      <h2 id="titulo-numeros">Nossos números em 2025</h2>
+      <ul>
+        <li>430 crianças e adolescentes atendidos</li>
+        <li>12.500 refeições distribuídas</li>
+        <li>86 voluntários ativos</li>
+      </ul>
+    </aside>
+  </main>
+
+  <footer class="rodape">
+    <h2>Contato</h2>
+    <address>
+      Rua das Acácias, 145 &ndash; Itaim Paulista, São Paulo/SP &ndash; CEP 08110-000<br>
+      Telefone: <a href="tel:+551122223333">(11) 2222-3333</a><br>
+      E-mail: <a href="mailto:contato@semearfuturo.org.br">contato@semearfuturo.org.br</a>
+    </address>
+    <p>CNPJ: 12.345.678/0001-90</p>
+    <p><small>&copy; 2026 ONG Semear Futuro. Todos os direitos reservados.</small></p>
+  </footer>
+  <script src="../js/menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cadastre-se como doador ou voluntário da ONG Semear Futuro.">
+  <title>Cadastro de doadores e voluntários | ONG Semear Futuro</title>
+  <link rel="stylesheet" href="../css/estilo.css">
+</head>
+<body>
+  <a class="pular-link" href="#conteudo">Pular para o conteúdo principal</a>
+
+  <header class="cabecalho">
+    <div class="marca-grupo">
+      <img src="../imagens/logo-semear-futuro.png" alt="Logotipo da ONG Semear Futuro: uma muda de planta dentro de um círculo verde" width="56" height="56">
+      <p class="marca">ONG Semear Futuro</p>
+    </div>
+
+    <button type="button" class="botao-menu" aria-expanded="false" aria-controls="menu-principal">
+      <span class="icone-menu" aria-hidden="true"></span>
+      Menu
+    </button>
+
+    <nav class="navegacao" id="menu-principal" aria-label="Navegação principal">
+      <ul class="menu">
+        <li><a href="index.html">Início</a></li>
+        <li class="menu-item-sub">
+          <a href="projetos.html">Projetos sociais</a>
+          <button type="button" class="botao-submenu" aria-expanded="false" aria-controls="submenu-projetos">
+            <span class="sr-only">Abrir submenu de projetos</span>
+          </button>
+          <ul class="submenu" id="submenu-projetos">
+            <li><a href="projetos.html#reforco-escolar">Reforço escolar</a></li>
+            <li><a href="projetos.html#cozinha-solidaria">Cozinha Solidária</a></li>
+            <li><a href="projetos.html#inclusao-digital">Inclusão Digital</a></li>
+          </ul>
+        </li>
+        <li><a href="cadastro.html" aria-current="page">Cadastre-se</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+    <h1>Cadastro de doadores e voluntários</h1>
+    <p class="intro">
+      Os campos marcados com asterisco (*) são obrigatórios. Seus dados são usados apenas para
+      contato sobre as ações da ONG, conforme a Lei Geral de Proteção de Dados.
+    </p>
+
+    <form action="#" method="post" novalidate id="form-cadastro">
+      <p class="alerta alerta-erro" id="alerta-form" role="alert" hidden></p>
+      <fieldset>
+        <legend>Dados pessoais</legend>
+
+        <p class="campo">
+          <label for="nome">Nome completo *</label>
+          <input type="text" id="nome" name="nome" required minlength="5" maxlength="80"
+                 autocomplete="name" placeholder="Ex.: Maria Aparecida Souza"
+                 aria-describedby="ajuda-nome">
+          <span class="ajuda" id="ajuda-nome">Informe nome e sobrenome, no mínimo 5 caracteres.</span>
+        </p>
+
+        <p class="campo">
+          <label for="cpf">CPF *</label>
+          <input type="text" id="cpf" name="cpf" required inputmode="numeric" maxlength="14"
+                 pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="000.000.000-00"
+                 aria-describedby="ajuda-cpf">
+          <span class="ajuda" id="ajuda-cpf">Formato: 000.000.000-00 (a máscara é aplicada automaticamente).</span>
+        </p>
+
+        <p class="campo">
+          <label for="nascimento">Data de nascimento *</label>
+          <input type="date" id="nascimento" name="nascimento" required min="1920-01-01" max="2010-12-31">
+        </p>
+
+        <p class="campo">
+          <label for="email">E-mail *</label>
+          <input type="email" id="email" name="email" required maxlength="100"
+                 autocomplete="email" placeholder="nome@provedor.com.br">
+        </p>
+
+        <p class="campo">
+          <label for="telefone">Telefone celular *</label>
+          <input type="tel" id="telefone" name="telefone" required inputmode="numeric" maxlength="15"
+                 pattern="\(\d{2}\) \d{5}-\d{4}" placeholder="(11) 90000-0000"
+                 aria-describedby="ajuda-telefone">
+          <span class="ajuda" id="ajuda-telefone">Formato: (11) 90000-0000.</span>
+        </p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Endereço</legend>
+
+        <p class="campo">
+          <label for="cep">CEP *</label>
+          <input type="text" id="cep" name="cep" required inputmode="numeric" maxlength="9"
+                 pattern="\d{5}-\d{3}" placeholder="00000-000" aria-describedby="ajuda-cep">
+          <span class="ajuda" id="ajuda-cep">Formato: 00000-000.</span>
+        </p>
+
+        <p class="campo">
+          <label for="cidade">Cidade *</label>
+          <input type="text" id="cidade" name="cidade" required maxlength="60"
+                 autocomplete="address-level2">
+        </p>
+
+        <p class="campo">
+          <label for="estado">Estado *</label>
+          <select id="estado" name="estado" required>
+            <option value="">Selecione o estado</option>
+            <option value="SP">São Paulo</option>
+            <option value="RJ">Rio de Janeiro</option>
+            <option value="MG">Minas Gerais</option>
+            <option value="BA">Bahia</option>
+            <option value="PI">Piauí</option>
+            <option value="outro">Outro</option>
+          </select>
+        </p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Forma de participação</legend>
+
+        <fieldset class="grupo-radio">
+          <legend>Como você quer apoiar? *</legend>
+          <p class="campo-inline">
+            <input type="radio" id="tipo-doador" name="tipo" value="doador" required>
+            <label for="tipo-doador">Quero doar</label>
+          </p>
+          <p class="campo-inline">
+            <input type="radio" id="tipo-voluntario" name="tipo" value="voluntario">
+            <label for="tipo-voluntario">Quero ser voluntário</label>
+          </p>
+          <p class="campo-inline">
+            <input type="radio" id="tipo-ambos" name="tipo" value="ambos">
+            <label for="tipo-ambos">Os dois</label>
+          </p>
+        </fieldset>
+
+        <p class="campo">
+          <label for="projeto">Projeto de interesse *</label>
+          <select id="projeto" name="projeto" required>
+            <option value="">Selecione um projeto</option>
+            <option value="reforco">Reforço escolar Semear</option>
+            <option value="cozinha">Cozinha Solidária</option>
+            <option value="digital">Inclusão Digital</option>
+          </select>
+        </p>
+
+        <p class="campo">
+          <label for="valor">Valor da doação mensal (R$)</label>
+          <input type="number" id="valor" name="valor" min="20" max="5000" step="10"
+                 placeholder="20" aria-describedby="ajuda-valor">
+          <span class="ajuda" id="ajuda-valor">Opcional. Valor mínimo de R$ 20,00.</span>
+        </p>
+
+        <p class="campo">
+          <label for="horas">Horas semanais disponíveis</label>
+          <input type="number" id="horas" name="horas" min="1" max="40" step="1" placeholder="4">
+        </p>
+
+        <p class="campo">
+          <label for="mensagem">Mensagem para a equipe</label>
+          <textarea id="mensagem" name="mensagem" rows="4" maxlength="500"
+                    placeholder="Conte brevemente sua experiência ou sua disponibilidade."></textarea>
+        </p>
+
+        <p class="campo-inline">
+          <input type="checkbox" id="lgpd" name="lgpd" value="aceito" required>
+          <label for="lgpd">Autorizo o uso dos meus dados para contato, conforme a LGPD *</label>
+        </p>
+      </fieldset>
+
+      <p class="acoes">
+        <button type="submit">Enviar cadastro</button>
+        <button type="reset">Limpar formulário</button>
+      </p>
+    </form>
+
+    <dialog class="modal" id="modal-sucesso" aria-labelledby="titulo-modal">
+      <h2 id="titulo-modal">Cadastro recebido</h2>
+      <p>Obrigado por apoiar a Semear Futuro. Nossa equipe entrará em contato em até três dias úteis.</p>
+      <p><button type="button" class="botao" id="fechar-modal">Fechar</button></p>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  </main>
+
+  <footer class="rodape">
+    <h2>Contato</h2>
+    <address>
+      Rua das Acácias, 145 &ndash; Itaim Paulista, São Paulo/SP &ndash; CEP 08110-000<br>
+      Telefone: <a href="tel:+551122223333">(11) 2222-3333</a><br>
+      E-mail: <a href="mailto:contato@semearfuturo.org.br">contato@semearfuturo.org.br</a>
+    </address>
+    <p>CNPJ: 12.345.678/0001-90</p>
+    <p><small>&copy; 2026 ONG Semear Futuro. Todos os direitos reservados.</small></p>
+  </footer>
+
+  <script src="../js/menu.js"></script>
+  <script src="../js/mascaras.js"></script>
+</body>
+</html>
