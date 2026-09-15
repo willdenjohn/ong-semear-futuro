@@ -79,6 +79,8 @@ try {
   await ir('#/projetos');
   verificar('navegação por hash não recarrega a página', await avaliar('window.__marcador === 42'));
   verificar('rota de projetos renderiza 3 cards', (await avaliar('document.querySelectorAll(".card").length')) === 3);
+  verificar('troca de rota move o foco para o h1 da tela', await avaliar('document.activeElement === document.querySelector("#app h1")'));
+  verificar('troca de rota é anunciada para leitor de tela', /Projetos sociais/.test(await avaliar('document.querySelector("#anuncio-rota").textContent')));
 
   // 2. Filtro por categoria
   await avaliar('document.querySelector(\'[data-filtro="tecnologia"]\').click()');
@@ -118,12 +120,18 @@ try {
   verificar('cadastro válido salvo no localStorage', salvos === 1, `${salvos} registro`);
   verificar('após salvar, navega para Meus cadastros', (await avaliar('location.hash')) === '#/meus-cadastros');
   verificar('modal de confirmação aberto', await avaliar('document.querySelector("#modal").open'));
+  verificar('foco vai para o botão Fechar do modal', await avaliar('document.activeElement.id === "modal-fechar"'));
   await avaliar('document.querySelector("#modal").close()');
-
+  verificar('ao fechar o modal o foco volta para a tela', await avaliar('document.activeElement === document.querySelector("#app h1")'));
   // 7. Persistência após recarregar
   await cdp('Page.reload');
   await esperar(1500);
   verificar('dado continua listado após recarregar', (await avaliar('document.querySelectorAll(".botao-remover").length')) === 1);
+
+  // Teclado: no carregamento, o primeiro Tab cai no link "Pular para o conteúdo"
+  await cdp('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 });
+  await cdp('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 });
+  verificar('primeiro Tab após carregar foca o link Pular para o conteúdo', await avaliar('document.activeElement.classList.contains("pular-link")'));
 
   // 8. Regressão: listener não pode duplicar ao visitar a tela várias vezes
   await avaliar(`localStorage.setItem('semear:cadastros', JSON.stringify([

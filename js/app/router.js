@@ -12,7 +12,7 @@ export function criarRouter({ rotas, rotaPadrao, naoEncontrada, container }) {
     return hash || rotaPadrao;
   }
 
-  function renderizar() {
+  function renderizar(opcoes = {}) {
     const caminho = caminhoAtual();
     const rota = rotas[caminho] || naoEncontrada;
 
@@ -25,9 +25,19 @@ export function criarRouter({ rotas, rotaPadrao, naoEncontrada, container }) {
       rota.montar(container);
     }
 
-    // Leva o foco ao conteúdo novo, como aconteceria numa troca de página
-    container.focus();
     window.scrollTo({ top: 0 });
+
+    // No carregamento inicial o foco fica no topo do documento, para o primeiro Tab
+    // cair no link "Pular para o conteúdo". Nas trocas de rota, o foco vai para o
+    // título da tela nova (WCAG 2.4.3) e a troca é anunciada numa região aria-live
+    // curta, em vez de fazer o leitor de tela reler o <main> inteiro
+    if (opcoes.inicial) return;
+    const titulo = container.querySelector('h1');
+    if (titulo) titulo.setAttribute('tabindex', '-1');
+    (titulo || container).focus({ preventScroll: true });
+
+    const anuncio = document.getElementById('anuncio-rota');
+    if (anuncio) anuncio.textContent = `Página ${rota.titulo} carregada.`;
   }
 
   return {
@@ -36,7 +46,7 @@ export function criarRouter({ rotas, rotaPadrao, naoEncontrada, container }) {
       if (!window.location.hash) {
         window.location.replace(`#${rotaPadrao}`);
       }
-      renderizar();
+      renderizar({ inicial: true });
     },
     navegar(caminho) {
       window.location.hash = caminho;

@@ -32,7 +32,7 @@
   </header>
 
   <!-- O conteúdo de cada rota é injetado aqui pelo router -->
-  <main id="app" tabindex="-1" aria-live="polite">
+  <main id="app" tabindex="-1">
     <h1 class="sr-only">ONG Semear Futuro</h1>
     <noscript>
       <p class="alerta alerta-aviso">Esta página precisa de JavaScript. Use a <a href="index.html">versão estática do site</a>.</p>
@@ -46,6 +46,9 @@
   </dialog>
 
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <!-- Anuncia a troca de rota para leitores de tela sem reler a página inteira -->
+  <p class="sr-only" id="anuncio-rota" aria-live="polite"></p>
 
   <footer class="rodape">
     <h2>Contato</h2>

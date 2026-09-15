@@ -73,7 +73,7 @@ export function templateInicio() {
 export function templateCard(projeto) {
   return `
     <article class="card" id="${projeto.id}" data-categoria="${projeto.categoria}">
-      <h3>${escaparHTML(projeto.titulo)}</h3>
+      <h2>${escaparHTML(projeto.titulo)}</h2>
       <ul class="badges" aria-label="Categorias do projeto">
         <li class="badge badge-${projeto.categoria}">${escaparHTML(projeto.rotuloCategoria)}</li>
         <li class="badge ${projeto.status.classe}">${escaparHTML(projeto.status.texto)}</li>
