@@ -20,8 +20,10 @@ import {
   salvarRascunho,
   carregarRascunho,
   limparRascunho,
+  lerPreferenciaContraste,
+  salvarPreferenciaContraste,
 } from './storage.js';
-import { mostrarToast, abrirModal, iniciarModal, iniciarMenu } from './ui.js';
+import { mostrarToast, abrirModal, iniciarModal, iniciarMenu, iniciarAltoContraste } from './ui.js';
 import { renderizarGraficoBarras } from './grafico.js';
 
 /* ---------- Tela: início (gráfico com biblioteca externa) ---------- */
@@ -175,6 +177,10 @@ const router = criarRouter({
   container: document.getElementById('app'),
 });
 
+iniciarAltoContraste({
+  preferenciaSalva: lerPreferenciaContraste(),
+  aoAlterar: salvarPreferenciaContraste,
+});
 iniciarMenu();
 iniciarModal();
 router.iniciar();

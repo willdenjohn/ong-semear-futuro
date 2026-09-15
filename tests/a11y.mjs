@@ -39,6 +39,16 @@ const paginas = [
       return new Promise((r) => setTimeout(r, 400));
     })()`,
   },
+  ...['inicio', 'projetos'].map((rota) => ({
+    nome: `SPA - ${rota} (alto contraste)`,
+    url: `${BASE}/html/app.html#/${rota}`,
+    preparar: 'document.documentElement.dataset.contraste = "alto"',
+  })),
+  {
+    nome: 'SPA - cadastro com erros (alto contraste)',
+    url: `${BASE}/html/app.html#/cadastro`,
+    preparar: 'document.documentElement.dataset.contraste = "alto"; document.querySelector("#form-cadastro").requestSubmit()',
+  },
   { nome: 'Estática - index', url: `${BASE}/html/index.html` },
   { nome: 'Estática - projetos', url: `${BASE}/html/projetos.html` },
   { nome: 'Estática - cadastro', url: `${BASE}/html/cadastro.html` },

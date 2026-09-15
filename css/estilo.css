@@ -187,6 +187,36 @@ main {
   cursor: pointer;
 }
 
+/* Botão de alto contraste (alterna aria-pressed) */
+.botao-contraste {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  min-height: 44px;
+  margin-left: auto;
+  padding: var(--espaco-2) var(--espaco-3);
+  font: inherit;
+  font-weight: 600;
+  color: var(--cor-primaria-900);
+  background: var(--cor-branca);
+  border: 1px solid var(--cor-primaria-700);
+  border-radius: var(--raio-sm);
+  cursor: pointer;
+}
+
+.botao-contraste[aria-pressed="true"] {
+  color: var(--cor-branca);
+  background: var(--cor-primaria-900);
+}
+
+.icone-contraste {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  background: linear-gradient(90deg, currentColor 50%, transparent 50%);
+}
+
 .icone-menu,
 .icone-menu::before,
 .icone-menu::after {
@@ -909,5 +939,145 @@ address {
   *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- 9. Alto contraste ---------- */
+
+/* Tokens do modo alto contraste: ativado pelo botão (data-contraste="alto")
+   ou pela preferência do sistema, a menos que o usuário tenha escolhido "normal" */
+:root[data-contraste="alto"] {
+  --cor-primaria-900: #000000;
+  --cor-primaria-700: #0a4225;
+  --cor-primaria-500: #0a4225;
+  --cor-primaria-100: #ffffff;
+  --cor-secundaria-700: #7a2e00;
+  --cor-secundaria-100: #ffffff;
+  --cor-neutra-900: #000000;
+  --cor-neutra-600: #1f1f1f;
+  --cor-neutra-300: #000000;
+  --cor-borda-campo: #000000;
+  --cor-sucesso: #0a4225;
+  --cor-erro: #8a1712;
+  --cor-aviso: #4d3300;
+  --cor-foco: #0033cc;
+  --sombra-card: none;
+  --sombra-card-hover: none;
+}
+
+@media (prefers-contrast: more) {
+  :root:not([data-contraste="normal"]) {
+    --cor-primaria-900: #000000;
+    --cor-primaria-700: #0a4225;
+    --cor-primaria-500: #0a4225;
+    --cor-primaria-100: #ffffff;
+    --cor-secundaria-700: #7a2e00;
+    --cor-secundaria-100: #ffffff;
+    --cor-neutra-900: #000000;
+    --cor-neutra-600: #1f1f1f;
+    --cor-neutra-300: #000000;
+    --cor-borda-campo: #000000;
+    --cor-sucesso: #0a4225;
+    --cor-erro: #8a1712;
+    --cor-aviso: #4d3300;
+    --cor-foco: #0033cc;
+    --sombra-card: none;
+    --sombra-card-hover: none;
+  }
+}
+
+/* Ajustes que não dependem só de cor: sublinhado, bordas e foco mais espessos */
+:root[data-contraste="alto"] a {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+:root[data-contraste="alto"] :focus-visible {
+  outline-width: 4px;
+  outline-offset: 3px;
+}
+
+:root[data-contraste="alto"] .card,
+:root[data-contraste="alto"] fieldset,
+:root[data-contraste="alto"] input,
+:root[data-contraste="alto"] select,
+:root[data-contraste="alto"] textarea,
+:root[data-contraste="alto"] .filtro,
+:root[data-contraste="alto"] .botao-menu,
+:root[data-contraste="alto"] .botao-contraste,
+:root[data-contraste="alto"] .botao-remover,
+:root[data-contraste="alto"] button[type="reset"] {
+  border-width: 2px;
+}
+
+:root[data-contraste="alto"] .badge {
+  border: 2px solid currentColor;
+}
+
+:root[data-contraste="alto"] .badge-alimentacao { background: #ffffff; color: #5c2200; }
+:root[data-contraste="alto"] .badge-tecnologia  { background: #ffffff; color: #002a6b; }
+
+:root[data-contraste="alto"] .alerta-sucesso,
+:root[data-contraste="alto"] .alerta-erro,
+:root[data-contraste="alto"] .alerta-aviso {
+  background: #ffffff;
+  border-left-width: 8px;
+}
+
+:root[data-contraste="alto"] .botao:hover,
+:root[data-contraste="alto"] button[type="submit"]:hover {
+  background: #000000;
+}
+
+:root[data-contraste="alto"] .rodape a {
+  color: #ffffff;
+}
+
+:root[data-contraste="alto"] .modal::backdrop {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+/* Modo de cores forçadas (Contraste Alto do Windows): o sistema define as cores,
+   então o CSS garante bordas visíveis e estados que não dependem de fundo */
+@media (forced-colors: active) {
+  .botao,
+  button,
+  .filtro,
+  .badge,
+  .alerta,
+  .toast,
+  .card {
+    border: 2px solid ButtonText;
+  }
+
+  .filtro[aria-pressed="true"],
+  .botao-contraste[aria-pressed="true"],
+  .menu a[aria-current="page"] {
+    forced-color-adjust: none;
+    color: HighlightText;
+    background: Highlight;
+  }
+
+  .icone-menu,
+  .icone-menu::before,
+  .icone-menu::after {
+    background: ButtonText;
+  }
+
+  .botao-menu[aria-expanded="true"] .icone-menu {
+    background: transparent;
+  }
+
+  .icone-contraste {
+    forced-color-adjust: none;
+    border-color: ButtonText;
+    background: linear-gradient(90deg, ButtonText 50%, transparent 50%);
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: 3px solid Highlight;
   }
 }

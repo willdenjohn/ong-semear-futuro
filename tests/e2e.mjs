@@ -139,6 +139,18 @@ try {
   await cdp('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 });
   verificar('primeiro Tab após carregar foca o link Pular para o conteúdo', await avaliar('document.activeElement.classList.contains("pular-link")'));
 
+  // Alto contraste: botão alterna o modo, troca os tokens e a escolha persiste
+  await avaliar('document.querySelector("#botao-contraste").click()');
+  verificar('botão Alto contraste ativa o modo e marca aria-pressed', await avaliar(
+    'document.documentElement.dataset.contraste === "alto" && document.querySelector("#botao-contraste").getAttribute("aria-pressed") === "true"',
+  ));
+  const corTexto = await avaliar('getComputedStyle(document.body).color');
+  verificar('alto contraste troca os tokens (texto preto)', corTexto === 'rgb(0, 0, 0)', corTexto);
+  await cdp('Page.reload');
+  await esperar(1500);
+  verificar('preferência de alto contraste persiste após recarregar', await avaliar('document.documentElement.dataset.contraste === "alto"'));
+  await avaliar('document.querySelector("#botao-contraste").click()');
+
   // 8. Regressão: listener não pode duplicar ao visitar a tela várias vezes
   await avaliar(`localStorage.setItem('semear:cadastros', JSON.stringify([
     { id: 'a', nome: 'A', tipo: 'doador', projeto: 'reforco-escolar', criadoEm: new Date().toISOString() },
