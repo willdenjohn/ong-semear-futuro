@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Cadastre-se como doador ou voluntário da ONG Semear Futuro.">
   <title>Cadastro de doadores e voluntários | ONG Semear Futuro</title>
+  <!-- Aplica o alto contraste salvo antes da pintura, evitando piscar a versão padrão -->
+  <script>try{var c=JSON.parse(localStorage.getItem("semear:contraste"));if(c)document.documentElement.setAttribute("data-contraste",c)}catch(e){}</script>
   <link rel="stylesheet" href="../css/estilo.css">
 </head>
 <body>
@@ -12,9 +14,17 @@
 
   <header class="cabecalho">
     <div class="marca-grupo">
-      <img src="../imagens/logo-semear-futuro.png" alt="Logotipo da ONG Semear Futuro: uma muda de planta dentro de um círculo verde" width="56" height="56">
+      <picture>
+        <source type="image/webp" srcset="../imagens/logo-semear-futuro-56.webp 1x, ../imagens/logo-semear-futuro-112.webp 2x">
+        <img src="../imagens/logo-semear-futuro.png" alt="Logotipo da ONG Semear Futuro: uma muda de planta dentro de um círculo verde" width="56" height="56">
+      </picture>
       <p class="marca">ONG Semear Futuro</p>
     </div>
+
+    <button type="button" class="botao-contraste" id="botao-contraste" aria-pressed="false">
+      <span class="icone-contraste" aria-hidden="true"></span>
+      Alto contraste
+    </button>
 
     <button type="button" class="botao-menu" aria-expanded="false" aria-controls="menu-principal">
       <span class="icone-menu" aria-hidden="true"></span>

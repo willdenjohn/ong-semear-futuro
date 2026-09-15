@@ -10,6 +10,32 @@
   var navegacao = document.getElementById('menu-principal');
   var botaoSubmenu = document.querySelector('.botao-submenu');
   var submenu = document.getElementById('submenu-projetos');
+  var botaoContraste = document.getElementById('botao-contraste');
+  var CHAVE_CONTRASTE = 'semear:contraste';
+
+  // Alto contraste: mesma chave do localStorage usada pela SPA
+  function aplicarContraste(alto) {
+    document.documentElement.setAttribute('data-contraste', alto ? 'alto' : 'normal');
+    if (botaoContraste) {
+      botaoContraste.setAttribute('aria-pressed', String(alto));
+    }
+  }
+
+  if (botaoContraste) {
+    var salvo = null;
+    try {
+      salvo = JSON.parse(localStorage.getItem(CHAVE_CONTRASTE));
+    } catch (erro) { /* storage indisponível: segue o sistema */ }
+    aplicarContraste(salvo ? salvo === 'alto' : window.matchMedia('(prefers-contrast: more)').matches);
+
+    botaoContraste.addEventListener('click', function () {
+      var alto = document.documentElement.getAttribute('data-contraste') !== 'alto';
+      aplicarContraste(alto);
+      try {
+        localStorage.setItem(CHAVE_CONTRASTE, JSON.stringify(alto ? 'alto' : 'normal'));
+      } catch (erro) { /* preferência vale só nesta visita */ }
+    });
+  }
 
   function alternarMenu(abrir) {
     if (!botaoMenu || !navegacao) {

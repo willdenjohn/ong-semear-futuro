@@ -2,6 +2,7 @@
  * Teste ponta a ponta da SPA no Chrome real, via Chrome DevTools Protocol.
  * Pré-requisito: servidor local em http://127.0.0.1:5500 (npm start).
  * Uso: node tests/e2e.mjs
+ * Para testar o build: BASE_URL=http://127.0.0.1:5500/dist/html/app.html node tests/e2e.mjs
  */
 import { spawn } from 'node:child_process';
 import { mkdtempSync } from 'node:fs';
@@ -9,18 +10,23 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 const CHROME = process.env.CHROME_PATH || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
-const BASE = 'http://127.0.0.1:5500/html/app.html';
+const BASE = process.env.BASE_URL || 'http://127.0.0.1:5500/html/app.html';
 const PORTA = 9333;
 const esperar = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const perfil = mkdtempSync(join(tmpdir(), 'semear-e2e-'));
+// No runner Ubuntu do GitHub Actions o sandbox do Chrome é bloqueado pelo AppArmor
+const flagsCI = process.env.CI ? ['--no-sandbox', '--disable-dev-shm-usage'] : [];
 const chrome = spawn(CHROME, [
-  '--headless=new', '--disable-gpu', '--no-first-run',
+  '--headless=new', '--disable-gpu', '--no-first-run', ...flagsCI,
   `--remote-debugging-port=${PORTA}`, `--user-data-dir=${perfil}`, 'about:blank',
 ]);
+chrome.on('exit', (codigo) => {
+  if (codigo) console.error(`Chrome encerrou com código ${codigo}`);
+});
 
 async function conectar() {
-  for (let i = 0; i < 30; i += 1) {
+  for (let i = 0; i < 100; i += 1) {
     try {
       const alvos = await (await fetch(`http://127.0.0.1:${PORTA}/json`)).json();
       const pagina = alvos.find((a) => a.type === 'page');
@@ -79,6 +85,8 @@ try {
   await ir('#/projetos');
   verificar('navegação por hash não recarrega a página', await avaliar('window.__marcador === 42'));
   verificar('rota de projetos renderiza 3 cards', (await avaliar('document.querySelectorAll(".card").length')) === 3);
+  verificar('troca de rota move o foco para o h1 da tela', await avaliar('document.activeElement === document.querySelector("#app h1")'));
+  verificar('troca de rota é anunciada para leitor de tela', /Projetos sociais/.test(await avaliar('document.querySelector("#anuncio-rota").textContent')));
 
   // 2. Filtro por categoria
   await avaliar('document.querySelector(\'[data-filtro="tecnologia"]\').click()');
@@ -118,12 +126,30 @@ try {
   verificar('cadastro válido salvo no localStorage', salvos === 1, `${salvos} registro`);
   verificar('após salvar, navega para Meus cadastros', (await avaliar('location.hash')) === '#/meus-cadastros');
   verificar('modal de confirmação aberto', await avaliar('document.querySelector("#modal").open'));
+  verificar('foco vai para o botão Fechar do modal', await avaliar('document.activeElement.id === "modal-fechar"'));
   await avaliar('document.querySelector("#modal").close()');
-
+  verificar('ao fechar o modal o foco volta para a tela', await avaliar('document.activeElement === document.querySelector("#app h1")'));
   // 7. Persistência após recarregar
   await cdp('Page.reload');
   await esperar(1500);
   verificar('dado continua listado após recarregar', (await avaliar('document.querySelectorAll(".botao-remover").length')) === 1);
+
+  // Teclado: no carregamento, o primeiro Tab cai no link "Pular para o conteúdo"
+  await cdp('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 });
+  await cdp('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 });
+  verificar('primeiro Tab após carregar foca o link Pular para o conteúdo', await avaliar('document.activeElement.classList.contains("pular-link")'));
+
+  // Alto contraste: botão alterna o modo, troca os tokens e a escolha persiste
+  await avaliar('document.querySelector("#botao-contraste").click()');
+  verificar('botão Alto contraste ativa o modo e marca aria-pressed', await avaliar(
+    'document.documentElement.dataset.contraste === "alto" && document.querySelector("#botao-contraste").getAttribute("aria-pressed") === "true"',
+  ));
+  const corTexto = await avaliar('getComputedStyle(document.body).color');
+  verificar('alto contraste troca os tokens (texto preto)', corTexto === 'rgb(0, 0, 0)', corTexto);
+  await cdp('Page.reload');
+  await esperar(1500);
+  verificar('preferência de alto contraste persiste após recarregar', await avaliar('document.documentElement.dataset.contraste === "alto"'));
+  await avaliar('document.querySelector("#botao-contraste").click()');
 
   // 8. Regressão: listener não pode duplicar ao visitar a tela várias vezes
   await avaliar(`localStorage.setItem('semear:cadastros', JSON.stringify([
