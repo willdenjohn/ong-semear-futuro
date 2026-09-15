@@ -19,6 +19,7 @@
   --cor-neutra-900: #1a1a1a;
   --cor-neutra-600: #4b5563;
   --cor-neutra-300: #cfd8dc;
+  --cor-borda-campo: #6b7280; /* 4.83:1 sobre branco - WCAG 1.4.11 exige 3:1 */
   --cor-neutra-100: #f5f7f8;
   --cor-branca: #ffffff;
 
@@ -536,7 +537,7 @@ textarea {
   font: inherit;
   min-height: 44px;
   padding: var(--espaco-2) var(--espaco-3);
-  border: 1px solid var(--cor-neutra-300);
+  border: 1px solid var(--cor-borda-campo);
   border-radius: var(--raio-sm);
   background: var(--cor-branca);
   transition: border-color var(--transicao), box-shadow var(--transicao);
