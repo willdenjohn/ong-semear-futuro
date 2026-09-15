@@ -120,6 +120,15 @@ O projeto segue a **WCAG 2.1 nível AA**:
 - **Formulários:** `label` em todos os campos, `fieldset`/`legend` nos grupos. Erros usam `aria-invalid` e `aria-describedby`, e o resumo usa `role="alert"`.
 - **Imagens e gráfico:** `alt` descritivo. O `canvas` tem `role="img"` e `aria-label` com os valores, que também aparecem em texto.
 - **Movimento:** animações desligadas com `prefers-reduced-motion`.
+- **Alto contraste:** botão "Alto contraste" no cabeçalho (`aria-pressed`) que troca os tokens de cor, sublinha links e engrossa bordas e foco. A escolha fica salva no `localStorage`. Sem escolha salva, o site segue `prefers-contrast: more` do sistema. Um script no `<head>` aplica a preferência antes da pintura, e o modo de cores forçadas do Windows (`forced-colors: active`) é tratado com cores de sistema.
+
+| Modo alto contraste | Contraste |
+| --- | --- |
+| Texto `#000000` sobre branco | 21.00:1 |
+| Link e botão `#0a4225` / branco | 11.55:1 |
+| Botão principal (branco sobre `#7a2e00`) | 9.47:1 |
+| Erro `#8a1712` sobre branco | 9.49:1 |
+| Indicador de foco `#0033cc` (4px) | 8.95:1 |
 
 Contraste medido nos tokens do design system:
 
