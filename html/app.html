@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Plataforma da ONG Semear Futuro: projetos sociais, cadastro de doadores e voluntários.">
+  <title>ONG Semear Futuro</title>
+  <link rel="stylesheet" href="../css/estilo.css">
+</head>
+<body>
+  <a class="pular-link" href="#app">Pular para o conteúdo principal</a>
+
+  <header class="cabecalho">
+    <div class="marca-grupo">
+      <img src="../imagens/logo-semear-futuro.png" alt="Logotipo da ONG Semear Futuro: uma muda de planta dentro de um círculo verde" width="56" height="56">
+      <p class="marca">ONG Semear Futuro</p>
+    </div>
+
+    <button type="button" class="botao-menu" aria-expanded="false" aria-controls="menu-principal">
+      <span class="icone-menu" aria-hidden="true"></span>
+      Menu
+    </button>
+
+    <nav class="navegacao" id="menu-principal" aria-label="Navegação principal">
+      <ul class="menu">
+        <li><a href="#/inicio" data-rota="/inicio">Início</a></li>
+        <li><a href="#/projetos" data-rota="/projetos">Projetos sociais</a></li>
+        <li><a href="#/cadastro" data-rota="/cadastro">Cadastre-se</a></li>
+        <li><a href="#/meus-cadastros" data-rota="/meus-cadastros">Meus cadastros</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- O conteúdo de cada rota é injetado aqui pelo router -->
+  <main id="app" tabindex="-1" aria-live="polite">
+    <h1 class="sr-only">ONG Semear Futuro</h1>
+    <noscript>
+      <p class="alerta alerta-aviso">Esta página precisa de JavaScript. Use a <a href="index.html">versão estática do site</a>.</p>
+    </noscript>
+  </main>
+
+  <dialog class="modal" id="modal" aria-labelledby="modal-titulo">
+    <h2 id="modal-titulo">Aviso</h2>
+    <p id="modal-texto"></p>
+    <p><button type="button" class="botao" id="modal-fechar">Fechar</button></p>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <footer class="rodape">
+    <h2>Contato</h2>
+    <address>
+      Rua das Acácias, 145 &ndash; Itaim Paulista, São Paulo/SP &ndash; CEP 08110-000<br>
+      Telefone: <a href="tel:+551122223333">(11) 2222-3333</a><br>
+      E-mail: <a href="mailto:contato@semearfuturo.org.br">contato@semearfuturo.org.br</a>
+    </address>
+    <p><small>&copy; 2026 ONG Semear Futuro. Todos os direitos reservados.</small></p>
+  </footer>
+
+  <script type="module" src="../js/app/main.js"></script>
+</body>
+</html>
