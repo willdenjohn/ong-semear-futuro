@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Guia de componentes de feedback do design system da ONG Semear Futuro.">
+  <title>Guia de componentes | ONG Semear Futuro</title>
+  <link rel="stylesheet" href="../css/estilo.css">
+</head>
+<body>
+  <header class="cabecalho">
+    <div class="marca-grupo">
+      <img src="../imagens/logo-semear-futuro.png" alt="Logotipo da ONG Semear Futuro: uma muda de planta dentro de um círculo verde" width="56" height="56">
+      <p class="marca">ONG Semear Futuro &middot; Design System</p>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <h1>Guia de componentes de feedback</h1>
+    <p>Referência visual dos componentes de retorno ao usuário, com as classes prontas para reuso.</p>
+
+    <section class="guia-bloco" aria-labelledby="titulo-badges">
+      <h2 id="titulo-badges">Badges</h2>
+      <p>Classes: <code>.badge</code> + <code>.badge-educacao</code>, <code>.badge-alimentacao</code>, <code>.badge-tecnologia</code>, <code>.badge-status</code>, <code>.badge-urgente</code>.</p>
+      <ul class="badges" aria-label="Exemplos de badges">
+        <li class="badge badge-educacao">Educação</li>
+        <li class="badge badge-alimentacao">Alimentação</li>
+        <li class="badge badge-tecnologia">Tecnologia</li>
+        <li class="badge badge-status">Vagas abertas</li>
+        <li class="badge badge-urgente">Doação urgente</li>
+      </ul>
+    </section>
+
+    <section class="guia-bloco" aria-labelledby="titulo-alertas">
+      <h2 id="titulo-alertas">Alertas</h2>
+      <p>Classes: <code>.alerta</code> + <code>.alerta-sucesso</code>, <code>.alerta-erro</code>, <code>.alerta-aviso</code>.</p>
+      <p class="alerta alerta-sucesso" role="status"><strong>Sucesso:</strong> Cadastro enviado. Você receberá um e-mail de confirmação.</p>
+      <p class="alerta alerta-erro" role="alert"><strong>Erro:</strong> Revise os campos destacados antes de enviar o cadastro.</p>
+      <p class="alerta alerta-aviso" role="note"><strong>Atenção:</strong> As inscrições para o reforço escolar encerram na sexta-feira.</p>
+    </section>
+
+    <section class="guia-bloco" aria-labelledby="titulo-toast">
+      <h2 id="titulo-toast">Toast</h2>
+      <p>Classe <code>.toast</code> com <code>role="status"</code> e <code>aria-live="polite"</code>. No site, fica fixo no canto inferior direito por 4 segundos.</p>
+      <div class="toast toast-demo" role="status" aria-live="polite">Cadastro enviado com sucesso.</div>
+    </section>
+
+    <section class="guia-bloco" aria-labelledby="titulo-modal-guia">
+      <h2 id="titulo-modal-guia">Modal</h2>
+      <p>Elemento <code>&lt;dialog class="modal"&gt;</code> aberto com <code>showModal()</code>, com fundo <code>::backdrop</code> e fechamento por Esc.</p>
+      <dialog class="modal modal-demo" open aria-labelledby="titulo-modal-exemplo">
+        <h2 id="titulo-modal-exemplo">Cadastro recebido</h2>
+        <p>Obrigado por apoiar a Semear Futuro. Nossa equipe entrará em contato em até três dias úteis.</p>
+        <p><button type="button" class="botao">Fechar</button></p>
+      </dialog>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <p><small>&copy; 2026 ONG Semear Futuro. Guia interno de componentes.</small></p>
+  </footer>
+</body>
+</html>
