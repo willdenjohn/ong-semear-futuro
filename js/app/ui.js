@@ -65,6 +65,31 @@ export function iniciarMenu() {
   });
 }
 
+/**
+ * Botão "Alto contraste". Sem escolha salva, segue a preferência do sistema
+ * (prefers-contrast: more). O estado fica em <html data-contraste> e o CSS troca os tokens.
+ * @param {{ preferenciaSalva: string|null, aoAlterar: (valor: string) => void }} opcoes
+ */
+export function iniciarAltoContraste({ preferenciaSalva, aoAlterar }) {
+  const botao = document.getElementById('botao-contraste');
+  const raiz = document.documentElement;
+  const sistemaPedeContraste = window.matchMedia('(prefers-contrast: more)').matches;
+
+  const aplicar = (alto) => {
+    raiz.dataset.contraste = alto ? 'alto' : 'normal';
+    botao?.setAttribute('aria-pressed', String(alto));
+  };
+
+  aplicar(preferenciaSalva ? preferenciaSalva === 'alto' : sistemaPedeContraste);
+
+  botao?.addEventListener('click', () => {
+    const alto = raiz.dataset.contraste !== 'alto';
+    aplicar(alto);
+    aoAlterar(alto ? 'alto' : 'normal');
+    mostrarToast(alto ? 'Alto contraste ativado.' : 'Alto contraste desativado.');
+  });
+}
+
 /** Destaca no menu o link da rota ativa. */
 export function marcarRotaAtiva(caminho) {
   document.querySelectorAll('[data-rota]').forEach((link) => {

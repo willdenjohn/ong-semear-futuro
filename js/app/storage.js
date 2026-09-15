@@ -6,6 +6,7 @@
 
 const CHAVE_CADASTROS = 'semear:cadastros';
 const CHAVE_RASCUNHO = 'semear:rascunho-cadastro';
+const CHAVE_CONTRASTE = 'semear:contraste';
 
 function ler(chave, padrao) {
   try {
@@ -56,6 +57,15 @@ export function salvarRascunho(dados) {
 
 export function carregarRascunho() {
   return ler(CHAVE_RASCUNHO, null);
+}
+
+/** Preferência de contraste escolhida pelo usuário: 'alto', 'normal' ou null (seguir o sistema). */
+export function lerPreferenciaContraste() {
+  return ler(CHAVE_CONTRASTE, null);
+}
+
+export function salvarPreferenciaContraste(valor) {
+  return gravar(CHAVE_CONTRASTE, valor);
 }
 
 export function limparRascunho() {
