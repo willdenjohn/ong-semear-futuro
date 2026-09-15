@@ -3,6 +3,7 @@
  */
 
 let temporizadorToast;
+let focoAntesDoModal = null;
 
 export function mostrarToast(mensagem, duracao = 4000) {
   const toast = document.getElementById('toast');
@@ -20,12 +21,23 @@ export function abrirModal(titulo, texto) {
   if (!modal) return;
   document.getElementById('modal-titulo').textContent = titulo;
   document.getElementById('modal-texto').textContent = texto;
+  focoAntesDoModal = document.activeElement;
   modal.showModal();
+  document.getElementById('modal-fechar')?.focus();
 }
 
 export function iniciarModal() {
   const modal = document.getElementById('modal');
+  if (!modal) return;
   document.getElementById('modal-fechar')?.addEventListener('click', () => modal.close());
+
+  // Fechando pelo botão ou pela tecla Esc, o foco volta para onde o usuário estava
+  // (ou para o título da tela atual, se aquele elemento saiu do DOM)
+  modal.addEventListener('close', () => {
+    const destino = focoAntesDoModal?.isConnected ? focoAntesDoModal : document.querySelector('#app h1');
+    destino?.focus();
+    focoAntesDoModal = null;
+  });
 }
 
 export function iniciarMenu() {
