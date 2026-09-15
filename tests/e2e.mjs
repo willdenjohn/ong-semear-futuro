@@ -15,13 +15,18 @@ const PORTA = 9333;
 const esperar = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const perfil = mkdtempSync(join(tmpdir(), 'semear-e2e-'));
+// No runner Ubuntu do GitHub Actions o sandbox do Chrome é bloqueado pelo AppArmor
+const flagsCI = process.env.CI ? ['--no-sandbox', '--disable-dev-shm-usage'] : [];
 const chrome = spawn(CHROME, [
-  '--headless=new', '--disable-gpu', '--no-first-run',
+  '--headless=new', '--disable-gpu', '--no-first-run', ...flagsCI,
   `--remote-debugging-port=${PORTA}`, `--user-data-dir=${perfil}`, 'about:blank',
 ]);
+chrome.on('exit', (codigo) => {
+  if (codigo) console.error(`Chrome encerrou com código ${codigo}`);
+});
 
 async function conectar() {
-  for (let i = 0; i < 30; i += 1) {
+  for (let i = 0; i < 100; i += 1) {
     try {
       const alvos = await (await fetch(`http://127.0.0.1:${PORTA}/json`)).json();
       const pagina = alvos.find((a) => a.type === 'page');
